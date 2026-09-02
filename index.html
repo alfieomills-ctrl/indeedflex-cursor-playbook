@@ -579,7 +579,7 @@ h2 {
     <li>
       <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.8h7.2L19.2 9v10.7A1.5 1.5 0 0 1 17.7 21.2H7A1.5 1.5 0 0 1 5.5 19.7V5.3A1.5 1.5 0 0 1 7 3.8z"/><path d="M14.2 3.8V9H19"/></svg></span>
       <strong>Send the real file</strong>
-      <span>The PowerPoint, PDF, PNG or GIF lands in tmp/. HTML is only the preview.</span>
+      <span>The PowerPoint, PDF, PNG or GIF lands in the folder you opened, or on your Desktop. HTML is only the preview.</span>
     </li>
   </ol>
   <div class="demo" aria-label="Agent chat, looping demo">
@@ -869,7 +869,7 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
       waiting();
       later(reduce ? 200 : 1100, function () {
         clearWait();
-        msg("agent", "Midnight. Building now. I will drop the PowerPoint in tmp/.");
+        msg("agent", "Midnight. Building now. I will drop the PowerPoint in your folder.");
         later(reduce ? 1200 : 4500, runLoop);
       });
     });
