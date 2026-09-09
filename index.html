@@ -334,33 +334,60 @@ h2 {
   font-style: italic; font-weight: 600; color: var(--pink);
 }
 .j-stages {
-  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;
-  margin: 0 0 14px;
+  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin: 8px 0 18px; padding: 0;
+}
+.j-stages::before {
+  content: "";
+  position: absolute; left: 12.5%; right: 12.5%; top: 17px;
+  height: 2px; background: var(--line); z-index: 0;
 }
 .j-stage {
-  background: var(--wash); border-radius: 14px; padding: 16px 14px 14px;
-  text-align: left; font: inherit; color: inherit; border: 1px solid transparent;
+  position: relative; z-index: 1;
+  background: none; border: 0; padding: 0 8px 4px;
+  text-align: center; font: inherit; color: inherit;
 }
-.j-stage.is-live {
-  cursor: pointer; background: var(--white); border-color: var(--faint);
+.j-stage.is-live { cursor: pointer; }
+.j-node {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center;
+  margin: 0 auto 10px;
+  font-size: 12px; font-weight: 700;
+  background: var(--white); color: var(--muted);
+  border: 2px solid var(--line);
 }
-.j-stage.is-live:hover, .j-stage.is-live[aria-expanded="true"] {
-  border-color: var(--pink);
+.j-stage.is-live .j-node {
+  background: var(--pink); border-color: var(--pink); color: #fff;
+  box-shadow: 0 0 0 4px var(--white), 0 0 0 10px rgba(221,0,169,.14);
 }
-.j-stage.is-off { opacity: .4; pointer-events: none; }
-.j-num {
-  display: block; font-size: 12px; font-weight: 700; color: var(--pink);
-  margin-bottom: 6px;
+.j-stage.is-live:hover .j-node,
+.j-stage.is-live[aria-expanded="true"] .j-node {
+  box-shadow: 0 0 0 4px var(--white), 0 0 0 12px rgba(221,0,169,.2);
 }
-.j-stage.is-off .j-num { color: var(--muted); }
-.j-stage strong { display: block; font-size: 15px; font-weight: 700; }
+.j-stage.is-live:focus-visible {
+  outline: 2px solid var(--pink); outline-offset: 6px; border-radius: 12px;
+}
+.j-stage.is-off { pointer-events: none; }
+.j-stage strong {
+  display: block; font-size: 15px; font-weight: 700;
+}
+.j-stage.is-off strong { color: var(--muted); font-weight: 500; }
 .j-live {
-  display: block; margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--pink);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-top: 8px; padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(221,0,169,.12);
+  font-size: 12px; font-weight: 700; color: var(--pink);
 }
 .j-cap {
   font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 0 0 8px;
 }
-#j-training { margin-top: 36px; }
+#j-training {
+  margin-top: 28px; padding: 28px 24px 24px;
+  background: var(--wash); border-radius: 20px;
+  scroll-margin-top: 76px;
+}
 .j-subh {
   font-family: 'Indeed Sans', sans-serif;
   font-style: normal; font-weight: 500;
@@ -372,6 +399,7 @@ h2 {
   border: 1px solid var(--faint); border-radius: 14px;
   background: var(--white); overflow: hidden;
   align-self: start;
+  scroll-margin-top: 76px;
 }
 .j-mod-btn {
   width: 100%; background: none; border: 0; cursor: pointer;
@@ -383,7 +411,7 @@ h2 {
   background: var(--pink); color: #fff;
   font-size: 11px; font-weight: 700; line-height: 28px; text-align: center;
 }
-.j-mod-btn strong { display: block; font-size: 15px; font-weight: 700; color: var(--pink); }
+.j-mod-btn strong { display: block; font-size: 15px; font-weight: 700; color: var(--ink); }
 .j-mod-btn em {
   display: block; font-style: normal; font-size: 13.5px; color: var(--muted);
   margin-top: 4px; line-height: 1.4;
@@ -436,7 +464,17 @@ h2 {
   border-radius: 10px; overflow: hidden; background: var(--wash);
   aspect-ratio: 16 / 10;
 }
+.j-shot-empty {
+  background-color: #001435;
+  background-image: radial-gradient(rgba(255,255,255,.22) 1px, transparent 1.2px);
+  background-size: 12px 12px;
+}
 .j-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.j-mod.on { box-shadow: 0 10px 28px rgba(0,20,53,.08); }
+.j-mod.seen:not(.on) .j-mod-n {
+  background: var(--white); color: var(--pink);
+  box-shadow: inset 0 0 0 2px var(--pink);
+}
 .j-good {
   background: var(--wash); border-radius: 12px; padding: 14px 16px;
   margin: 0 0 14px;
@@ -447,7 +485,36 @@ h2 {
 .j-now span { color: var(--pink); }
 .j-now p { color: #fff; margin: 0; }
 @media (max-width: 800px) {
-  .j-stages, .j-grid { grid-template-columns: 1fr 1fr; }
+  .j-grid { grid-template-columns: 1fr; }
+  .j-stage strong { font-size: 13px; }
+}
+@media (max-width: 560px) {
+  .j-stages { grid-template-columns: 1fr; }
+  .j-stages::before {
+    left: 17px; right: auto; top: 18px; bottom: 18px; width: 2px; height: auto;
+  }
+  .j-stage {
+    display: grid; grid-template-columns: 36px 1fr; column-gap: 14px;
+    text-align: left; align-items: center; padding: 10px 0;
+  }
+  .j-node { margin: 0; grid-row: 1 / span 3; }
+  .j-live { justify-self: start; margin-top: 6px; }
+}
+#j-training:not([hidden]) .j-mod {
+  animation: j-in .4s ease both;
+}
+#j-training:not([hidden]) .j-mod:nth-child(1) { animation-delay: .04s; }
+#j-training:not([hidden]) .j-mod:nth-child(2) { animation-delay: .08s; }
+#j-training:not([hidden]) .j-mod:nth-child(3) { animation-delay: .12s; }
+#j-training:not([hidden]) .j-mod:nth-child(4) { animation-delay: .16s; }
+#j-training:not([hidden]) .j-mod:nth-child(5) { animation-delay: .2s; }
+#j-training:not([hidden]) .j-mod:nth-child(6) { animation-delay: .24s; }
+@keyframes j-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #j-training:not([hidden]) .j-mod { animation: none; }
 }
 .reveal {
   opacity: 0; transform: translateY(18px);
@@ -769,20 +836,20 @@ h2 {
   <h2 class="j-title">Use it in every stage of the client prospect and <em>client journey</em></h2>
   <div class="j-stages">
     <button type="button" class="j-stage is-live" id="j-prospect" aria-expanded="false" aria-controls="j-training">
-      <span class="j-num">01</span>
+      <span class="j-node">01</span>
       <strong>Prospecting</strong>
       <span class="j-live" id="j-live-lab">Live, open training</span>
     </button>
     <div class="j-stage is-off" aria-disabled="true">
-      <span class="j-num">02</span>
+      <span class="j-node">02</span>
       <strong>Closing</strong>
     </div>
     <div class="j-stage is-off" aria-disabled="true">
-      <span class="j-num">03</span>
+      <span class="j-node">03</span>
       <strong>Implementing</strong>
     </div>
     <div class="j-stage is-off" aria-disabled="true">
-      <span class="j-num">04</span>
+      <span class="j-node">04</span>
       <strong>Growing</strong>
     </div>
   </div>
@@ -850,13 +917,23 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
       prospect.setAttribute("aria-expanded", open ? "false" : "true");
       training.hidden = open;
       if (liveLab) liveLab.textContent = open ? "Live, open training" : "Hide training";
+      if (!open) training.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
   }
   document.querySelectorAll(".j-mod-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var art = btn.closest(".j-mod");
-      var on = art.classList.toggle("on");
-      btn.setAttribute("aria-expanded", on ? "true" : "false");
+      var opening = !art.classList.contains("on");
+      document.querySelectorAll(".j-mod.on").forEach(function (other) {
+        if (other === art) return;
+        other.classList.remove("on");
+        var ob = other.querySelector(".j-mod-btn");
+        if (ob) ob.setAttribute("aria-expanded", "false");
+      });
+      art.classList.toggle("on", opening);
+      art.classList.add("seen");
+      btn.setAttribute("aria-expanded", opening ? "true" : "false");
+      if (opening) art.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
     });
   });
 
