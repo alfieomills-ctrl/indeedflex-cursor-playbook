@@ -383,10 +383,24 @@ h2 {
 .j-cap {
   font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 0 0 8px;
 }
-#j-training {
+#j-training, #j-video {
   margin-top: 28px; padding: 28px 24px 24px;
   background: var(--wash); border-radius: 20px;
   scroll-margin-top: 76px;
+}
+.j-vid {
+  display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: start;
+}
+.j-vid .player video { aspect-ratio: 16 / 9; }
+.j-vid-copy p {
+  margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink);
+}
+.j-vid-dur {
+  font-size: 13px !important; font-weight: 700; color: var(--muted) !important;
+  margin: 0 0 16px !important;
+}
+@media (max-width: 800px) {
+  .j-vid { grid-template-columns: 1fr; }
 }
 .j-subh {
   font-family: 'Indeed Sans', sans-serif;
@@ -837,10 +851,10 @@ h2 {
   <p class="j-eye">By stage of the sales journey</p>
   <h2 class="j-title">Use it in every stage of the client prospect and <em>client journey</em></h2>
   <div class="j-stages">
-    <button type="button" class="j-stage is-live" id="j-prospect" aria-expanded="false" aria-controls="j-training">
+    <button type="button" class="j-stage is-live" id="j-prospect" aria-expanded="false" aria-controls="j-video">
       <span class="j-node">01</span>
       <strong>Prospecting</strong>
-      <span class="j-live" id="j-live-lab">Live, open training</span>
+      <span class="j-live" id="j-live-lab">Live, watch</span>
     </button>
     <div class="j-stage is-off" aria-disabled="true">
       <span class="j-node">02</span>
@@ -856,11 +870,27 @@ h2 {
     </div>
   </div>
   <p class="j-cap">Two cohorts run this now. Win covers prospecting through close. Grow covers kickoff through expansion. Prospecting is live first, the rest rolls out stage by stage.</p>
-  <div id="j-training" hidden>
-    <p class="j-eye">Prospecting, built out</p>
-    <h3 class="j-subh">Six things it can do to help <em>accelerate prospecting</em></h3>
-    <nav class="j-toc" aria-label="Prospecting training"><a href="#m01" data-jump="m01" title="Account intelligence">01</a><a href="#m02" data-jump="m02" title="Prospecting">02</a><a href="#m03" data-jump="m03" title="Buyer mapping">03</a><a href="#m04" data-jump="m04" title="Value prop for that account">04</a><a href="#m05" data-jump="m05" title="Outreach copy">05</a><a href="#m06" data-jump="m06" title="One pager tests">06</a></nav>
-    <div class="j-scroll"><article class="j-mod" id="m01"><header class="j-mod-head"><span class="j-mod-n">01</span><div><strong>Account intelligence</strong><em>Everything we know about an account, in one cited answer, before you dial.</em></div></header><div class="j-mod-body"><div class="j-block"><span>Why this matters</span><p>You open one window instead of five tabs, and every claim carries a source you can check before you use it.</p></div><div class="j-block"><span>What you get back</span><div class="j-shot j-shot-empty" role="img" aria-label="What you get back: Account intelligence"></div></div><div class="j-block"><span>How to do it</span><ol class="j-how"><li><span class="j-step-n">01</span><div><p>Open Cursor, start a new chat, set the model to Opus 4.8. Every prompt in this hub starts here.</p></div></li><li><span class="j-step-n">02</span><div><p>Type:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki what&#x27;s our current state on [account], wedge, pain and stage">Copy</button><pre>/ask-wiki what&#x27;s our current state on [account], wedge, pain and stage</pre></div><p>You get back a cited brief: verdict, wedge, pain, stage, stakeholders and a timeline of signals.</p></div></li><li><span class="j-step-n">03</span><div><p>Read it with the sources open. Click the source link on anything you plan to say out loud. A claim without a source is a gap, log it.</p></div></li><li><span class="j-step-n">04</span><div><p>If the account isn&#x27;t in the wiki yet, type:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="[Company] isn&#x27;t in the wiki yet: enrich it and summarize">Copy</button><pre>[Company] isn&#x27;t in the wiki yet: enrich it and summarize</pre></div><p>Enrichment takes five to fifteen minutes and files the result, so re-ask and it comes back cited. The next rep who asks inherits your work.</p></div></li><li><span class="j-step-n">05</span><div><p>Go deeper on how they operate:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki what do we know about how [account] buys labor today">Copy</button><pre>/ask-wiki what do we know about how [account] buys labor today</pre></div><p>Use this to shape your first question on the call.</p></div></li><li><span class="j-step-n">06</span><div><p>Pull the brief into your call prep doc or CRM notes. Ten minutes, done, and it&#x27;s the same quality every time.</p></div></li></ol></div><div class="j-block"><span>Common mistakes</span><ul><li>Asking in Slack when Cursor is the door in.</li><li>Quoting a number without clicking its source.</li><li>Re-running research on an account a colleague already enriched, always ask the wiki first.</li></ul></div><div class="j-good"><span>What good looks like</span><p>You walk into the call holding the account&#x27;s state, wedge, pain and stage, and you can name where every claim came from.</p></div><div class="j-now"><span>Now you</span><p>Run the current state prompt on the account you&#x27;re calling this week.</p></div></div></article><article class="j-mod" id="m02"><header class="j-mod-head"><span class="j-mod-n">02</span><div><strong>Prospecting</strong><em>Build target lists from a model, not a hunch.</em></div></header><div class="j-mod-body"><div class="j-block"><span>Why this matters</span><p>Your list is built from the same ICP model every time, so you can see why an account is worth the hour before you spend it.</p></div><div class="j-block"><span>What you get back</span><div class="j-shot j-shot-empty" role="img" aria-label="What you get back: Prospecting"></div></div><div class="j-block"><span>How to do it</span><ol class="j-how"><li><span class="j-step-n">01</span><div><p>Start with the score:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki score [account] against our industrial ICP model and tell me why">Copy</button><pre>/ask-wiki score [account] against our industrial ICP model and tell me why</pre></div><p>You get a 0 to 100 score and the reasons behind it.</p></div></li><li><span class="j-step-n">02</span><div><p>Read the why, not just the number. The reasons tell you the wedge and the risk. A 78 with a strong trigger beats a 85 with none.</p></div></li><li><span class="j-step-n">03</span><div><p>Find what&#x27;s moving in the sector:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki what triggers should I be watching in third party logistics now">Copy</button><pre>/ask-wiki what triggers should I be watching in third party logistics now</pre></div><p>Triggers turn a cold list into a timed list.</p></div></li><li><span class="j-step-n">04</span><div><p>Get the people:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="find decision makers for [account]">Copy</button><pre>find decision makers for [account]</pre></div><p>This kicks off enrichment, five to fifteen minutes, then re-ask and it comes back cited with contacts filed against the account.</p></div></li><li><span class="j-step-n">05</span><div><p>Repeat across your list, then rank by score plus trigger. That ranked list is your week.</p></div></li><li><span class="j-step-n">06</span><div><p>Anything you enriched is now in the wiki for the next rep. Nothing you did gets redone.</p></div></li></ol></div><div class="j-block"><span>Common mistakes</span><ul><li>Running contact finding in Slack and stopping there, Slack finds contacts but Cursor gives you the cited context, the account file and the assets in one place.</li><li>Chasing high scores with no trigger.</li><li>Skipping the &quot;tell me why&quot; and prospecting on a hunch anyway.</li></ul></div><div class="j-good"><span>What good looks like</span><p>A ranked target list where you can defend every account on it in one sentence: the score, the trigger, and the wedge.</p></div><div class="j-now"><span>Now you</span><p>Score two live targets from your patch today and compare the reasons.</p></div></div></article><article class="j-mod" id="m03"><header class="j-mod-head"><span class="j-mod-n">03</span><div><strong>Buyer mapping</strong><em>Who signs, who blocks, and what each one actually cares about.</em></div></header><div class="j-mod-body"><div class="j-block"><span>Why this matters</span><p>Deals stall on the person you never met. Mapping the committee before the first call means no surprise blocker at contract.</p></div><div class="j-block"><span>What you get back</span><div class="j-shot j-shot-empty" role="img" aria-label="What you get back: Buyer mapping"></div></div><div class="j-block"><span>How to do it</span><ol class="j-how"><li><span class="j-step-n">01</span><div><p>Learn the shape first:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki map the decision makers for a national 3PL, titles and what they own">Copy</button><pre>/ask-wiki map the decision makers for a national 3PL, titles and what they own</pre></div><p>Swap the sector for yours. This is the template buying group: who owns budget, who owns operations, who owns compliance, and the pushback each role brings.</p></div></li><li><span class="j-step-n">02</span><div><p>Now map your account:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki who are the buying roles at [account] and what does each care about">Copy</button><pre>/ask-wiki who are the buying roles at [account] and what does each care about</pre></div><p>You get named roles with what each one owns and cares about.</p></div></li><li><span class="j-step-n">03</span><div><p>Hold it against your open opportunity:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki who&#x27;s missing from my [account] opp and what should I ask them">Copy</button><pre>/ask-wiki who&#x27;s missing from my [account] opp and what should I ask them</pre></div><p>The missing roles come back named, with the questions to ask each persona, drawn from real deals.</p></div></li><li><span class="j-step-n">04</span><div><p>Put a real person&#x27;s name against every buying role in Salesforce. No name means that role is an action, not a blank.</p></div></li><li><span class="j-step-n">05</span><div><p>For each person, note their likely pushback from the map. That&#x27;s your prep for the next module, the value prop.</p></div></li><li><span class="j-step-n">06</span><div><p>Re-run step 3 after every meeting. The map is living, not a one-off.</p></div></li></ol></div><div class="j-block"><span>Common mistakes</span><ul><li>Mapping only the champion and the signer.</li><li>Treating a title map as the account map, always run step 2 on the real account.</li><li>Leaving a buying role blank in the opp instead of naming the gap.</li></ul></div><div class="j-good"><span>What good looks like</span><p>Every open opportunity has a named person against every buying role, and a reason to contact each of them.</p></div><div class="j-now"><span>Now you</span><p>Map your largest open opp and name the missing roles before Friday.</p></div></div></article><article class="j-mod" id="m04"><header class="j-mod-head"><span class="j-mod-n">04</span><div><strong>Value prop for that account</strong><em>The wedge written for them, not the pitch we give everybody.</em></div></header><div class="j-mod-body"><div class="j-block"><span>Why this matters</span><p>Two sentences you would say out loud, with a number you can defend if the CFO asks where it came from.</p></div><div class="j-block"><span>What you get back</span><div class="j-shot j-shot-empty" role="img" aria-label="What you get back: Value prop for that account"></div></div><div class="j-block"><span>How to do it</span><ol class="j-how"><li><span class="j-step-n">01</span><div><p>Get the wedge:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki write the wedge for [account]: pain, our angle, the proof behind it">Copy</button><pre>/ask-wiki write the wedge for [account]: pain, our angle, the proof behind it</pre></div><p>You get their pain, our angle, and the one proof point that carries it.</p></div></li><li><span class="j-step-n">02</span><div><p>Check the proof. Register cleared numbers only. If the number comes back without a source, do not use it, log it as a gap.</p></div></li><li><span class="j-step-n">03</span><div><p>Prep the pushback:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki what objections come up on pricing here and how do we handle them">Copy</button><pre>/ask-wiki what objections come up on pricing here and how do we handle them</pre></div><p>These are responses that have already worked, not theory.</p></div></li><li><span class="j-step-n">04</span><div><p>Prep the competition by model, never by name:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki give me the battlecard against a neutral vendor incumbent">Copy</button><pre>/ask-wiki give me the battlecard against a neutral vendor incumbent</pre></div><p>We never name a competitor in client facing copy, describe the model instead and keep the room on outcomes.</p></div></li><li><span class="j-step-n">05</span><div><p>Cut it down. Say the wedge out loud. If it takes more than two sentences, it isn&#x27;t ready.</p></div></li><li><span class="j-step-n">06</span><div><p>Save the wedge into the account notes so your outreach in the next module is built on it.</p></div></li></ol></div><div class="j-block"><span>Common mistakes</span><ul><li>Pitching the generic deck when a written-for-them wedge exists.</li><li>Quoting an uncleared number.</li><li>Naming a competitor in anything a client might see.</li></ul></div><div class="j-good"><span>What good looks like</span><p>Two sentences, one cleared proof point, and an answer ready for each persona&#x27;s pushback.</p></div><div class="j-now"><span>Now you</span><p>Write the wedge for two accounts you are working right now.</p></div></div></article><article class="j-mod" id="m05"><header class="j-mod-head"><span class="j-mod-n">05</span><div><strong>Outreach copy</strong><em>Sequences grounded in the account file, so nothing you send sounds generic.</em></div></header><div class="j-mod-body"><div class="j-block"><span>Why this matters</span><p>The prospect could not have received the same email from anyone else, and every figure in it is sourced.</p></div><div class="j-block"><span>What you get back</span><div class="j-shot j-shot-empty" role="img" aria-label="What you get back: Outreach copy"></div></div><div class="j-block"><span>How to do it</span><ol class="j-how"><li><span class="j-step-n">01</span><div><p>Do modules 01 to 04 first. Outreach is only as good as the account file, wedge and buyer map behind it.</p></div></li><li><span class="j-step-n">02</span><div><p>Build the sequence:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki draft a five touch sequence for the [role] at [account] on [pain]">Copy</button><pre>/ask-wiki draft a five touch sequence for the [role] at [account] on [pain]</pre></div><p>The copy comes from that account&#x27;s pain, stakeholder and stage, plus the cadences and flight paths in the existing playbooks.</p></div></li><li><span class="j-step-n">03</span><div><p>Read it as the prospect. If a line could have gone to anyone, cut it or ask for a rewrite tied to their trigger.</p></div></li><li><span class="j-step-n">04</span><div><p>Sharpen your own drafts too:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki rewrite this opener in our tone of voice with one cleared proof point">Copy</button><pre>/ask-wiki rewrite this opener in our tone of voice with one cleared proof point</pre></div><p>It rewrites your work, not just first drafts. Tone of voice is enforced, plain language, no invented numbers.</p></div></li><li><span class="j-step-n">05</span><div><p>Check every figure has a source before it goes in the sequence. Sourced or it ships as words, not numbers.</p></div></li><li><span class="j-step-n">06</span><div><p>After the meeting, keep the thread alive:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/ask-wiki what&#x27;s the right follow up after a first meeting with a VP of Ops">Copy</button><pre>/ask-wiki what&#x27;s the right follow up after a first meeting with a VP of Ops</pre></div><p>Load the sequence into Outreach and send.</p></div></li></ol></div><div class="j-block"><span>Common mistakes</span><ul><li>Sending template copy with the account name swapped in.</li><li>Skipping the buyer map and writing to the wrong pain for that role.</li><li>Pasting in a figure from memory.</li></ul></div><div class="j-good"><span>What good looks like</span><p>One sequence built from a real account file and actually sent, with every number sourced.</p></div><div class="j-now"><span>Now you</span><p>Build and send one sequence this week from an account file you built in modules 01 to 04.</p></div></div></article><article class="j-mod" id="m06"><header class="j-mod-head"><span class="j-mod-n">06</span><div><strong>One pager tests</strong><em>Leave behinds you can self serve, on brand, in minutes.</em></div></header><div class="j-mod-body"><div class="j-block"><span>Why this matters</span><p>A first draft in minutes that you would be happy to leave on the table, without waiting on the design queue.</p></div><div class="j-block"><span>What you get back</span><div class="j-shot j-shot-empty" role="img" aria-label="What you get back: One pager tests"></div></div><div class="j-block"><span>How to do it</span><ol class="j-how"><li><span class="j-step-n">01</span><div><p>Describe the asset in plain English with the audience and the pain:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/brand-deck one pager for [account], warehouse audience, focused on cost">Copy</button><pre>/brand-deck one pager for [account], warehouse audience, focused on cost</pre></div><p>Real fonts, colors, frames and photography come from the brand system automatically.</p></div></li><li><span class="j-step-n">02</span><div><p>For competitive leave behinds, ask by model:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="/brand-deck battlecard one pager, Flex Plus against a VMS alone">Copy</button><pre>/brand-deck battlecard one pager, Flex Plus against a VMS alone</pre></div></div></li><li><span class="j-step-n">03</span><div><p>Review the draft like a client would. Unconfirmed numbers come back as an [X%] placeholder, never invented. A placeholder is your prompt to go get the cleared number, not to guess one.</p></div></li><li><span class="j-step-n">04</span><div><p>Got an old off brand asset? Attach it:</p><div class="j-code"><button type="button" class="j-copy" data-copy-text="Using the brand skill, redesign this deck [attach the PDF]">Copy</button><pre>Using the brand skill, redesign this deck [attach the PDF]</pre></div><p>Every stat, name and quote is preserved, just restyled onto the brand.</p></div></li><li><span class="j-step-n">05</span><div><p>Iterate in the same chat: ask for a tone shift, a different photo, an extra page. Refine, don&#x27;t restart.</p></div></li><li><span class="j-step-n">06</span><div><p>Tell us exactly where it missed, in Slack or the form. Every miss becomes a rule in the skill.</p></div></li></ol></div><div class="j-block"><span>Common mistakes</span><ul><li>Filling an [X%] placeholder with a number from memory.</li><li>Starting a new chat to iterate instead of refining the draft.</li><li>Shipping the first draft without reading it as the client.</li></ul></div><div class="j-good"><span>What good looks like</span><p>An on brand leave behind, built by you, on the table at your next meeting.</p></div><div class="j-now"><span>Now you</span><p>Build one one pager for a live deal and log what&#x27;s off about it.</p></div></div></article></div>
+  <div id="j-video" hidden>
+    <div class="j-vid">
+      <div class="player" id="j-theater">
+        <video id="j-player" playsinline poster="watch/prospect-enrichment.jpg" src="watch/prospect-enrichment.mp4"></video>
+        <div class="player-ui">
+          <button type="button" class="play" id="j-play" aria-label="Play">
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>
+          </button>
+          <div class="scrub" id="j-scrub" role="slider" aria-label="Seek"><i id="j-bar"></i></div>
+          <div class="time" id="j-time">0:00 / 6:41</div>
+        </div>
+      </div>
+      <div class="j-vid-copy">
+        <p class="j-eye">Prospecting</p>
+        <h3 class="j-subh">Local contacts, <em>straight to CRM</em></h3>
+        <p class="j-vid-dur">6:41 · Account enrichment in Slack, start to finish.</p>
+        <p>One message in Cursor, or posted in the channel, finds the people at a site and writes them into Salesforce. You name the account, the plant, the titles and the assignee. It confirms the domain itself. The thread is the audit: who was created, who was skipped, and why.</p>
+        <p>A name on its own is not an account. Street, city and zip pin it to one record. Then the same pattern on a list: Cursor resolves every name first, posts three at a time, and you do not type the follow-up.</p>
+        <p>Four things go wrong if you paste the website on the record, follow a bad parent link, send Source fields on an update, or treat the upload as a draft.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -912,15 +942,22 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
   });
 
   var prospect = document.getElementById("j-prospect");
-  var training = document.getElementById("j-training");
+  var jPanel = document.getElementById("j-video") || document.getElementById("j-training");
   var liveLab = document.getElementById("j-live-lab");
-  if (prospect && training) {
+  var jIsVideo = !!document.getElementById("j-video");
+  var jPlayer = document.getElementById("j-player");
+  if (prospect && jPanel) {
     prospect.addEventListener("click", function () {
       var open = prospect.getAttribute("aria-expanded") === "true";
       prospect.setAttribute("aria-expanded", open ? "false" : "true");
-      training.hidden = open;
-      if (liveLab) liveLab.textContent = open ? "Live, open training" : "Hide training";
-      if (!open) training.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      jPanel.hidden = open;
+      if (liveLab) {
+        liveLab.textContent = jIsVideo
+          ? (open ? "Live, watch" : "Hide video")
+          : (open ? "Live, open training" : "Hide training");
+      }
+      if (!open) jPanel.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      if (open && jPlayer && !jPlayer.paused) jPlayer.pause();
     });
   }
   var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".j-toc a[data-jump]"));
@@ -1202,25 +1239,40 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
     s = Math.max(0, Math.floor(s || 0));
     return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
   }
-  function sync() {
-    var d = player.duration || 0;
-    bar.style.width = (d ? (player.currentTime / d) * 100 : 0) + "%";
-    time.textContent = fmt(player.currentTime) + " / " + fmt(d);
-    play.innerHTML = player.paused ? PLAY_SVG : PAUSE_SVG;
-    play.setAttribute("aria-label", player.paused ? "Play" : "Pause");
+  function bindPlayer(el, playBtn, barEl, timeEl, scrubEl, other) {
+    if (!el || !playBtn || !barEl || !timeEl || !scrubEl) return;
+    function sync() {
+      var d = el.duration || 0;
+      barEl.style.width = (d ? (el.currentTime / d) * 100 : 0) + "%";
+      timeEl.textContent = fmt(el.currentTime) + " / " + fmt(d);
+      playBtn.innerHTML = el.paused ? PLAY_SVG : PAUSE_SVG;
+      playBtn.setAttribute("aria-label", el.paused ? "Play" : "Pause");
+    }
+    playBtn.addEventListener("click", function () {
+      if (el.paused) el.play(); else el.pause();
+    });
+    el.addEventListener("timeupdate", sync);
+    el.addEventListener("play", function () {
+      if (other && !other.paused) other.pause();
+      sync();
+    });
+    el.addEventListener("pause", sync);
+    el.addEventListener("loadedmetadata", sync);
+    scrubEl.addEventListener("click", function (e) {
+      var r = scrubEl.getBoundingClientRect();
+      var p = (e.clientX - r.left) / r.width;
+      if (el.duration) el.currentTime = p * el.duration;
+    });
   }
-  play.addEventListener("click", function () {
-    if (player.paused) player.play(); else player.pause();
-  });
-  player.addEventListener("timeupdate", sync);
-  player.addEventListener("play", sync);
-  player.addEventListener("pause", sync);
-  player.addEventListener("loadedmetadata", sync);
-  scrub.addEventListener("click", function (e) {
-    var r = scrub.getBoundingClientRect();
-    var p = (e.clientX - r.left) / r.width;
-    if (player.duration) player.currentTime = p * player.duration;
-  });
+  bindPlayer(player, play, bar, time, scrub, jPlayer);
+  bindPlayer(
+    jPlayer,
+    document.getElementById("j-play"),
+    document.getElementById("j-bar"),
+    document.getElementById("j-time"),
+    document.getElementById("j-scrub"),
+    player
+  );
   document.querySelectorAll("[data-watch]").forEach(function (row) {
     row.addEventListener("click", function () {
       document.querySelectorAll("[data-watch]").forEach(function (c) {
@@ -1241,6 +1293,14 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
         if (!en.isIntersecting && !player.paused) player.pause();
       });
     }, { threshold: 0.2 }).observe(theater);
+  }
+  var jTheater = document.getElementById("j-theater");
+  if (jTheater && jPlayer) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting && !jPlayer.paused) jPlayer.pause();
+      });
+    }, { threshold: 0.2 }).observe(jTheater);
   }
 })();
 </script>
