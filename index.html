@@ -384,23 +384,37 @@ h2 {
   font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 0 0 8px;
 }
 #j-training, #j-video {
-  margin-top: 28px; padding: 28px 24px 24px;
+  margin-top: 28px; padding: 32px 32px 36px;
   background: var(--wash); border-radius: 20px;
   scroll-margin-top: 76px;
 }
-.j-vid {
-  display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: start;
+.j-vid-title {
+  font-family: 'Indeed Sans', sans-serif;
+  font-style: normal; font-weight: 500;
+  font-size: 28px; line-height: 1.2; letter-spacing: -.02em;
+  color: var(--ink); margin: 0 0 20px;
 }
-.j-vid .player video { aspect-ratio: 16 / 9; }
-.j-vid-copy p {
-  margin: 0 0 12px; font-size: 14.5px; line-height: 1.5; color: var(--ink);
+.j-vid-title em {
+  font-family: 'Ivy Presto', Georgia, serif;
+  font-style: italic; font-weight: 600; color: var(--pink);
 }
-.j-vid-dur {
-  font-size: 13px !important; font-weight: 700; color: var(--muted) !important;
-  margin: 0 0 16px !important;
+#j-video .player {
+  background: var(--white);
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 1px 0 var(--faint);
+}
+#j-video .player video { aspect-ratio: 16 / 9; }
+#j-video .play { width: 40px; height: 40px; }
+#j-video .play svg { width: 13px; height: 13px; }
+.j-vid-copy {
+  max-width: 38em;
+  margin: 18px 0 0;
+  font-size: 15px; line-height: 1.5; color: var(--muted);
 }
 @media (max-width: 800px) {
-  .j-vid { grid-template-columns: 1fr; }
+  #j-training, #j-video { padding: 22px 18px 24px; }
+  .j-vid-title { font-size: 22px; }
 }
 .j-subh {
   font-family: 'Indeed Sans', sans-serif;
@@ -871,26 +885,19 @@ h2 {
   </div>
   <p class="j-cap">Two cohorts run this now. Win covers prospecting through close. Grow covers kickoff through expansion. Prospecting is live first, the rest rolls out stage by stage.</p>
   <div id="j-video" hidden>
-    <div class="j-vid">
-      <div class="player" id="j-theater">
-        <video id="j-player" playsinline poster="watch/prospect-enrichment.jpg" src="watch/prospect-enrichment.mp4"></video>
-        <div class="player-ui">
-          <button type="button" class="play" id="j-play" aria-label="Play">
-            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>
-          </button>
-          <div class="scrub" id="j-scrub" role="slider" aria-label="Seek"><i id="j-bar"></i></div>
-          <div class="time" id="j-time">0:00 / 6:41</div>
-        </div>
-      </div>
-      <div class="j-vid-copy">
-        <p class="j-eye">Prospecting</p>
-        <h3 class="j-subh">Local contacts, <em>straight to CRM</em></h3>
-        <p class="j-vid-dur">6:41 · Account enrichment in Slack, start to finish.</p>
-        <p>One message in Cursor, or posted in the channel, finds the people at a site and writes them into Salesforce. You name the account, the plant, the titles and the assignee. It confirms the domain itself. The thread is the audit: who was created, who was skipped, and why.</p>
-        <p>A name on its own is not an account. Street, city and zip pin it to one record. Then the same pattern on a list: Cursor resolves every name first, posts three at a time, and you do not type the follow-up.</p>
-        <p>Four things go wrong if you paste the website on the record, follow a bad parent link, send Source fields on an update, or treat the upload as a draft.</p>
+    <p class="j-eye">Prospecting</p>
+    <h3 class="j-vid-title">Local contacts, <em>straight to CRM</em></h3>
+    <div class="player" id="j-theater">
+      <video id="j-player" playsinline poster="watch/prospect-enrichment.jpg" src="watch/prospect-enrichment.mp4"></video>
+      <div class="player-ui">
+        <button type="button" class="play" id="j-play" aria-label="Play">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>
+        </button>
+        <div class="scrub" id="j-scrub" role="slider" aria-label="Seek"><i id="j-bar"></i></div>
+        <div class="time" id="j-time">0:00 / 6:41</div>
       </div>
     </div>
+    <p class="j-vid-copy">One message finds the people at a site and writes them into Salesforce. Name the account and the plant; it confirms the domain, and the thread is the audit.</p>
   </div>
 </section>
 
