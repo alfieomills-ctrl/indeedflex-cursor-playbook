@@ -335,18 +335,22 @@ h2 {
 }
 .j-stages {
   position: relative;
-  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: grid; grid-template-columns: repeat(7, 1fr);
   margin: 8px 0 18px; padding: 0;
 }
 .j-stages::before {
   content: "";
-  position: absolute; left: 12.5%; right: 12.5%; top: 17px;
+  position: absolute; left: 7.15%; right: 7.15%; top: 17px;
   height: 2px; background: var(--line); z-index: 0;
 }
 .j-stage {
   position: relative; z-index: 1;
-  background: none; border: 0; padding: 0 8px 4px;
+  background: none; border: 0; padding: 0 4px 4px;
   text-align: center; font: inherit; color: inherit;
+  text-decoration: none; cursor: pointer;
+}
+.j-stage:focus-visible {
+  outline: 2px solid var(--pink); outline-offset: 4px; border-radius: 12px;
 }
 .j-node {
   width: 36px; height: 36px; border-radius: 50%;
@@ -356,15 +360,16 @@ h2 {
   background: var(--white); color: var(--muted);
   border: 2px solid var(--line);
 }
-.j-stage.is-live .j-node {
+.j-stage:hover .j-node { border-color: rgba(221,0,169,.45); color: var(--ink); }
+.j-stage.on .j-node {
   background: var(--pink); border-color: var(--pink); color: #fff;
   box-shadow: 0 0 0 4px var(--white), 0 0 0 10px rgba(221,0,169,.14);
 }
-.j-stage.is-off { pointer-events: none; }
 .j-stage strong {
-  display: block; font-size: 15px; font-weight: 700;
+  display: block; font-size: 12.5px; font-weight: 700; line-height: 1.25;
+  color: var(--muted);
 }
-.j-stage.is-off strong { color: var(--muted); font-weight: 500; }
+.j-stage:hover strong, .j-stage.on strong { color: var(--ink); }
 .j-live {
   display: inline-flex; align-items: center; justify-content: center;
   margin-top: 8px; padding: 4px 10px;
@@ -375,11 +380,8 @@ h2 {
 .j-cap {
   font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 0 0 8px;
 }
-#j-training, #j-video {
-  margin-top: 28px; padding: 32px 32px 36px;
-  background: var(--wash); border-radius: 20px;
-  scroll-margin-top: 76px;
-}
+#j-path { margin-top: 28px; }
+.j-mod-body .player { margin: 0 0 18px; }
 .j-vid-title {
   font-family: 'Indeed Sans', sans-serif;
   font-style: normal; font-weight: 500;
@@ -390,22 +392,21 @@ h2 {
   font-family: 'Ivy Presto', Georgia, serif;
   font-style: italic; font-weight: 600; color: var(--pink);
 }
-#j-video .player {
+#j-path .player {
   background: var(--white);
   border: 0;
   border-radius: 16px;
   box-shadow: 0 1px 0 var(--faint);
 }
-#j-video .player video { aspect-ratio: 16 / 9; }
-#j-video .play { width: 40px; height: 40px; }
-#j-video .play svg { width: 13px; height: 13px; }
+#j-path .player video { aspect-ratio: 16 / 9; }
+#j-path .play { width: 40px; height: 40px; }
+#j-path .play svg { width: 13px; height: 13px; }
 .j-vid-copy {
   max-width: 38em;
   margin: 18px 0 0;
   font-size: 15px; line-height: 1.5; color: var(--muted);
 }
 @media (max-width: 800px) {
-  #j-training, #j-video { padding: 22px 18px 24px; }
   .j-vid-title { font-size: 22px; }
 }
 .j-subh {
@@ -435,8 +436,26 @@ h2 {
 .j-mod {
   border: 1px solid var(--faint); border-radius: 16px;
   background: var(--white); padding: 28px 28px 24px;
-  scroll-margin-top: 116px;
+  scroll-margin-top: 76px;
 }
+#j-path { display: grid; gap: 16px; }
+.j-mod-txt { flex: 1; min-width: 0; }
+.j-mod-copy {
+  max-width: 46em; margin: 0 0 18px;
+  font-size: 15px; line-height: 1.5; color: var(--muted);
+}
+.j-mod-body .prompt { margin: 0 0 16px; }
+.j-list-t {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  margin: 22px 0 12px;
+}
+.j-carries { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.j-carries li {
+  display: grid; grid-template-columns: 22px 1fr; gap: 10px;
+  font-size: 14.5px; line-height: 1.45; color: var(--muted);
+  max-width: 46em;
+}
+.j-carries b { color: var(--ink); font-weight: 700; }
 .j-mod-head {
   display: flex; align-items: flex-start; gap: 12px;
   margin: 0 0 22px;
@@ -511,7 +530,7 @@ h2 {
   .j-stage strong { font-size: 13px; }
   .j-mod { padding: 20px 18px 18px; }
 }
-@media (max-width: 560px) {
+@media (max-width: 860px) {
   .j-stages { grid-template-columns: 1fr; }
   .j-stages::before {
     left: 17px; right: auto; top: 18px; bottom: 18px; width: 2px; height: auto;
@@ -520,25 +539,16 @@ h2 {
     display: grid; grid-template-columns: 36px 1fr; column-gap: 14px;
     text-align: left; align-items: center; padding: 10px 0;
   }
+  .j-stage strong { font-size: 15px; }
   .j-node { margin: 0; grid-row: 1 / span 3; }
   .j-live { justify-self: start; margin-top: 6px; }
 }
-#j-training:not([hidden]) .j-mod {
-  animation: j-in .4s ease both;
-}
-#j-training:not([hidden]) .j-mod:nth-child(1) { animation-delay: .04s; }
-#j-training:not([hidden]) .j-mod:nth-child(2) { animation-delay: .08s; }
-#j-training:not([hidden]) .j-mod:nth-child(3) { animation-delay: .12s; }
-#j-training:not([hidden]) .j-mod:nth-child(4) { animation-delay: .16s; }
-#j-training:not([hidden]) .j-mod:nth-child(5) { animation-delay: .2s; }
-#j-training:not([hidden]) .j-mod:nth-child(6) { animation-delay: .24s; }
 @keyframes j-in {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #j-training:not([hidden]) .j-mod { animation: none; }
-}
+  }
 .reveal {
   opacity: 0; transform: translateY(18px);
   transition: opacity .55s ease, transform .55s ease;
@@ -856,40 +866,170 @@ h2 {
 <section id="journey" class="reveal">
   <p class="j-eye">By stage of the sales journey</p>
   <h2 class="j-title">Use it in every stage of the client prospect and <em>client journey</em></h2>
-  <div class="j-stages">
-    <div class="j-stage is-live">
-      <span class="j-node">01</span>
-      <strong>Prospecting</strong>
-      <span class="j-live">Live</span>
-    </div>
-    <div class="j-stage is-off" aria-disabled="true">
-      <span class="j-node">02</span>
-      <strong>Closing</strong>
-    </div>
-    <div class="j-stage is-off" aria-disabled="true">
-      <span class="j-node">03</span>
-      <strong>Implementing</strong>
-    </div>
-    <div class="j-stage is-off" aria-disabled="true">
-      <span class="j-node">04</span>
-      <strong>Growing</strong>
-    </div>
-  </div>
-  <p class="j-cap">Two cohorts run this now. Win covers prospecting through close. Grow covers kickoff through expansion. Prospecting is live first, the rest rolls out stage by stage.</p>
-  <div id="j-video">
-    <p class="j-eye">Prospecting</p>
-    <h3 class="j-vid-title">Local contacts, <em>straight to CRM</em></h3>
-    <div class="player" id="j-theater">
-      <video id="j-player" playsinline poster="watch/prospect-enrichment.jpg" src="watch/prospect-enrichment.mp4"></video>
-      <div class="player-ui">
-        <button type="button" class="play" id="j-play" aria-label="Play">
-          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>
-        </button>
-        <div class="scrub" id="j-scrub" role="slider" aria-label="Seek"><i id="j-bar"></i></div>
-        <div class="time" id="j-time">0:00 / 6:41</div>
+  <nav class="j-stages" aria-label="Sales journey stages">
+    <a class="j-stage on" href="#j-01" data-jump="j-01"><span class="j-node">01</span><strong>Prospecting</strong></a>
+    <a class="j-stage" href="#j-02" data-jump="j-02"><span class="j-node">02</span><strong>Discovery call prep</strong></a>
+    <a class="j-stage" href="#j-03" data-jump="j-03"><span class="j-node">03</span><strong>Objection handling</strong></a>
+    <a class="j-stage" href="#j-04" data-jump="j-04"><span class="j-node">04</span><strong>Bespoke one&#8209;pager</strong></a>
+    <a class="j-stage" href="#j-05" data-jump="j-05"><span class="j-node">05</span><strong>Proposal build</strong></a>
+    <a class="j-stage" href="#j-06" data-jump="j-06"><span class="j-node">06</span><strong>Business case and ROI</strong></a>
+    <a class="j-stage" href="#j-07" data-jump="j-07"><span class="j-node">07</span><strong>Recap and follow&#8209;up</strong></a>
+  </nav>
+  <p class="j-cap">Every stage starts from the account brief, and every stage that produces something a client sees has a gate on it. Seven places in a deal where you would otherwise lose an evening.</p>
+  <div id="j-path">
+    <article class="j-mod" id="j-01">
+      <div class="j-mod-head">
+        <span class="j-mod-n">01</span>
+        <div class="j-mod-txt">
+          <strong>Prospecting</strong>
+          <em>Two prompts. The first tells you who they are. The second tells you what you are up against, and where the wedge is.</em>
+        </div>
       </div>
-    </div>
-    <p class="j-vid-copy">One message finds the people at a site and writes them into Salesforce. Name the account and the plant; it confirms the domain, and the thread is the audit.</p>
+      <div class="j-mod-body">
+        <h4 class="j-subh">Research before you reach out, <em>then reach</em></h4>
+      <div class="player" id="j-theater">
+        <video id="j-player" playsinline poster="watch/prospect-enrichment.jpg" src="watch/prospect-enrichment.mp4"></video>
+        <div class="player-ui">
+          <button type="button" class="play" id="j-play" aria-label="Play">
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>
+          </button>
+          <div class="scrub" id="j-scrub" role="slider" aria-label="Seek"><i id="j-bar"></i></div>
+          <div class="time" id="j-time">0:00 / 6:41</div>
+        </div>
+      </div>
+        <p class="j-mod-copy">One message finds the people at a site and writes them into Salesforce. Name the account and the plant; it confirms the domain, and the thread is the audit.</p>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-01-p1">Copy</button></div></div>
+          <div class="prompt-copy" id="j-01-p1" data-text="Account intelligence brief on [client]&#x27;s main distribution center. Our history, headcount and hiring signals, news and peak announcements from the last 90 days. Sections: what they do, why now, labor model signals, who we know, three hooks."><p class="p-lead">Account intelligence brief on [client]&#x27;s main distribution center. Our history, headcount and hiring signals, news and peak announcements from the last 90 days. Sections: what they do, why now, labor model signals, who we know, three hooks.</p></div>
+        </div>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-01-p2">Copy</button></div></div>
+          <div class="prompt-copy" id="j-01-p2" data-text="Sales intel on [client]&#x27;s current staffing model. Public sources plus our battle cards: which agency models they run, RFP signals, compliance exposure, peak calendar. Give me the wedge for each model. Describe competitors as models, never by name."><p class="p-lead">Sales intel on [client]&#x27;s current staffing model. Public sources plus our battle cards: which agency models they run, RFP signals, compliance exposure, peak calendar. Give me the wedge for each model. Describe competitors as models, never by name.</p></div>
+        </div>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-01-p3">Copy</button></div></div>
+          <div class="prompt-copy" id="j-01-p3" data-text="Draft five-touch Outreach sequence for the [client] DM. Use the account brief and the industrial persona. Touch 1 hooks their peak announcement, touch 3 carries one register proof point, touch 5 is a 15 minute ask. Under 90 words each, tone of voice skill, cite each number, no competitor names."><p class="p-lead">Draft five-touch Outreach sequence for the [client] DM. Use the account brief and the industrial persona. Touch 1 hooks their peak announcement, touch 3 carries one register proof point, touch 5 is a 15 minute ask. Under 90 words each, tone of voice skill, cite each number, no competitor names.</p></div>
+        </div>
+        <p class="caption">Swap the account and the site. Ask for the “why now” signals on their own if you want the short version.</p>
+      </div>
+    </article>
+    <article class="j-mod" id="j-02">
+      <div class="j-mod-head">
+        <span class="j-mod-n">02</span>
+        <div class="j-mod-txt">
+          <strong>Discovery call prep</strong>
+          <em>One brief per meeting: context, likely pains, the questions worth asking, the proof that lands.</em>
+        </div>
+      </div>
+      <div class="j-mod-body">
+        <h4 class="j-subh">One page, <em>per meeting</em></h4>
+        <p class="j-mod-copy">Not a static question list. It builds a plan from the account, the motion, the seat in the room and what we already know, and it drops what we have already been told.</p>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-02-p1">Copy</button></div></div>
+          <div class="prompt-copy" id="j-02-p1" data-text="Prep me for Thursday&#x27;s discovery call with [client]. Account brief, who is on the invite with their persona, six questions ordered by our biggest open gaps, and one proof point per persona. Flag anything in Salesforce or Outreach from the last 30 days I should mention. One page."><p class="p-lead">Prep me for Thursday&#x27;s discovery call with [client]. Account brief, who is on the invite with their persona, six questions ordered by our biggest open gaps, and one proof point per persona. Flag anything in Salesforce or Outreach from the last 30 days I should mention. One page.</p></div>
+        </div>
+        <p class="j-list-t">What a good plan carries</p>
+        <ul class="j-carries">
+          <li><span class="j-step-n">01</span><span><b>An opening contract.</b> Time, purpose, the mutual outcome, and an easy out. Said in plain English, never labeled.</span></li>
+          <li><span class="j-step-n">02</span><span><b>One question that puts a number on the pain.</b> Quantified with the segment cost model, in their units, not ours.</span></li>
+          <li><span class="j-step-n">03</span><span><b>One question only the budget holder can answer.</b> That is how the next meeting recruits the person who was not in this one.</span></li>
+          <li><span class="j-step-n">04</span><span><b>A calendared next step.</b> “We will follow up” is not a next step. Two or three specific times is.</span></li>
+        </ul>
+        <p class="caption">For a second call, add “and what they told us last time” and it pulls the recording.</p>
+      </div>
+    </article>
+    <article class="j-mod" id="j-03">
+      <div class="j-mod-head">
+        <span class="j-mod-n">03</span>
+        <div class="j-mod-txt">
+          <strong>Objection handling</strong>
+          <em>Pulling the right battle card live, and practicing the response until it sounds like you.</em>
+        </div>
+      </div>
+      <div class="j-mod-body">
+        <h4 class="j-subh">Pull the card, <em>then say it out loud</em></h4>
+        <p class="j-list-t">Four you will hear this month</p>
+        <ul class="j-carries">
+          <li><span class="j-step-n">01</span><span><b>“We are fully staffed”</b> Do not argue with the roster. “What does your backup plan look like when someone calls out two hours before a shift?” The opportunity is the next gap.</span></li>
+          <li><span class="j-step-n">02</span><span><b>“We are happy with our supplier”</b> Critique the model, never the vendor. “When you compare suppliers, what data do you use, fill and show rate and cost by site, or relationship feedback?”</span></li>
+          <li><span class="j-step-n">03</span><span><b>“Temp workers are not reliable”</b> Validate it, then name the structural difference: verified before booking, rated after every shift, your best people pooled. Never promise zero no-shows.</span></li>
+          <li><span class="j-step-n">04</span><span><b>“You are too expensive”</b> They are comparing bill rate, not program cost. Put admin time, overtime cover, turnover and supplier management on the table. Never discount on the call.</span></li>
+        </ul>
+        <p class="caption">Practice these until they sound like you rather than like a card.</p>
+      </div>
+    </article>
+    <article class="j-mod" id="j-04">
+      <div class="j-mod-head">
+        <span class="j-mod-n">04</span>
+        <div class="j-mod-txt">
+          <strong>Bespoke one-pager</strong>
+          <em>A quick, on-brand, account-specific leave-behind. One hook, three points, two proofs, one ask.</em>
+        </div>
+      </div>
+      <div class="j-mod-body">
+        <h4 class="j-subh">Copy first, <em>then design</em></h4>
+        <p class="j-mod-copy">Copy first, always. You read it, every number carries a source, you sign it off. Then design renders the approved words and never rewrites them.</p>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-04-p1">Copy</button></div></div>
+          <div class="prompt-copy" id="j-04-p1" data-text="One-pager for [client] on managing peak across three DCs. Their hook from the account brief, our peak playbook in three points, two register proof points, one CTA. Copy first, then the design skill with industrial imagery."><p class="p-lead">One-pager for [client] on managing peak across three DCs. Their hook from the account brief, our peak playbook in three points, two register proof points, one CTA. Copy first, then the design skill with industrial imagery.</p></div>
+        </div>
+      </div>
+    </article>
+    <article class="j-mod" id="j-05">
+      <div class="j-mod-head">
+        <span class="j-mod-n">05</span>
+        <div class="j-mod-txt">
+          <strong>Proposal build</strong>
+          <em>A designed client-facing proposal on the 25-section spine, with the approved-copy gate before design.</em>
+        </div>
+      </div>
+      <div class="j-mod-body">
+        <h4 class="j-subh">The proposal <em>has a spine</em></h4>
+        <p class="j-mod-copy">Twenty-five sections. The ones marked core appear in every full proposal, the rest switch in by bid type and question set, and every section traces to a source rather than being written cold.</p>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-05-p1">Copy</button></div></div>
+          <div class="prompt-copy" id="j-05-p1" data-text="Build the proposal spine for [client], [vertical], [incumbent or new]. Map their question set onto the 25-section spine, mark which sections are core for this bid, and cite the source for each one. Then draft the executive summary and the solution models section, options with a recommendation. Show me approved copy with a source list before any design."><p class="p-lead">Build the proposal spine for [client], [vertical], [incumbent or new]. Map their question set onto the 25-section spine, mark which sections are core for this bid, and cite the source for each one. Then draft the executive summary and the solution models section, options with a recommendation. Show me approved copy with a source list before any design.</p></div>
+        </div>
+        <p class="j-list-t">The gates that do not move</p>
+        <ul class="j-carries">
+          <li><span class="j-step-n">01</span><span><b>Two claim lanes, and nothing else.</b> Lane 1 is register-cleared. Lane 2 is the client's own data, verified in writing by the account owner for this bid.</span></li>
+          <li><span class="j-step-n">02</span><span><b>Branded client, unbranded everyone else.</b> Their name and brand are used freely. A third party is named only as a consented reference.</span></li>
+          <li><span class="j-step-n">03</span><span><b>Mirror their problem first.</b> The opening names what they are trying to do and where their model breaks. Then options, with a recommendation.</span></li>
+          <li><span class="j-step-n">04</span><span><b>No absolutes, anywhere.</b> No 100% compliance, no zero risk, no guarantee. “Enforced by the platform” is stronger and true.</span></li>
+          <li><span class="j-step-n">05</span><span><b>Approved copy before design.</b> The pre-submission checklist is a gate, not a suggestion.</span></li>
+        </ul>
+      </div>
+    </article>
+    <article class="j-mod" id="j-06">
+      <div class="j-mod-head">
+        <span class="j-mod-n">06</span>
+        <div class="j-mod-txt">
+          <strong>Business case and ROI</strong>
+          <em>A labor cost comparison anchored on the canonical saving, with every figure sourced.</em>
+        </div>
+      </div>
+      <div class="j-mod-body">
+        <h4 class="j-subh">Program cost, <em>not bill rate</em></h4>
+        <p class="caption">Prompt to follow. The training deck does not carry one for this stage yet.</p>
+      </div>
+    </article>
+    <article class="j-mod" id="j-07">
+      <div class="j-mod-head">
+        <span class="j-mod-n">07</span>
+        <div class="j-mod-txt">
+          <strong>Recap and follow-up</strong>
+          <em>The Outreach recording becomes a recap email, the next step and a Salesforce update in one pass.</em>
+        </div>
+      </div>
+      <div class="j-mod-body">
+        <h4 class="j-subh">Close <em>the loop</em></h4>
+        <div class="prompt">
+          <div class="prompt-top"><span>Paste into Agent</span><div class="prompt-actions"><button type="button" data-copy="j-07-p1">Copy</button></div></div>
+          <div class="prompt-copy" id="j-07-p1" data-text="Recap the [client] discovery call from Outreach. Decisions, the questions they asked, objections raised and how I handled them, next steps with owners and dates. Then a follow-up email under 150 words, tone of voice, referencing their two biggest pains in their words, attaching the one-pager, proposing two specific times. Update the opp in Salesforce on my confirm."><p class="p-lead">Recap the [client] discovery call from Outreach. Decisions, the questions they asked, objections raised and how I handled them, next steps with owners and dates. Then a follow-up email under 150 words, tone of voice, referencing their two biggest pains in their words, attaching the one-pager, proposing two specific times. Update the opp in Salesforce on my confirm.</p></div>
+        </div>
+        <p class="caption">If the meeting ended without a next step booked, securing one is the entire job of that email.</p>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -941,7 +1081,7 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
   });
 
   var jPlayer = document.getElementById("j-player");
-  var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".j-toc a[data-jump]"));
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".j-toc a[data-jump], .j-stages a[data-jump]"));
   var chapters = Array.prototype.slice.call(document.querySelectorAll(".j-mod"));
   tocLinks.forEach(function (a) {
     a.addEventListener("click", function (e) {
@@ -1053,7 +1193,7 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
     var make = document.getElementById("make");
     if (make) make.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   }
-  document.querySelectorAll("[data-jump]").forEach(function (btn) {
+  document.querySelectorAll(".g-card[data-jump]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       openCat(btn.getAttribute("data-jump"));
     });
