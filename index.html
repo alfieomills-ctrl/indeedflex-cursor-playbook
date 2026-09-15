@@ -365,6 +365,8 @@ h2 {
   background: var(--pink); border-color: var(--pink); color: #fff;
   box-shadow: 0 0 0 4px var(--white), 0 0 0 10px rgba(221,0,169,.14);
 }
+.j-mod[hidden] { display: none; }
+#j-path .j-mod { scroll-margin-top: 76px; }
 .j-stage strong {
   display: block; font-size: 12.5px; font-weight: 700; line-height: 1.25;
   color: var(--muted);
@@ -380,7 +382,7 @@ h2 {
 .j-cap {
   font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 0 0 8px;
 }
-#j-path { margin-top: 28px; }
+#j-path { margin-top: 24px; }
 .j-mod-body .player { margin: 0 0 18px; }
 .j-vid-title {
   font-family: 'Indeed Sans', sans-serif;
@@ -438,7 +440,6 @@ h2 {
   background: var(--white); padding: 28px 28px 24px;
   scroll-margin-top: 76px;
 }
-#j-path { display: grid; gap: 16px; }
 .j-mod-txt { flex: 1; min-width: 0; }
 .j-mod-copy {
   max-width: 46em; margin: 0 0 18px;
@@ -1081,28 +1082,64 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
   });
 
   var jPlayer = document.getElementById("j-player");
-  var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".j-toc a[data-jump], .j-stages a[data-jump]"));
-  var chapters = Array.prototype.slice.call(document.querySelectorAll(".j-mod"));
-  tocLinks.forEach(function (a) {
-    a.addEventListener("click", function (e) {
-      var el = document.getElementById(a.getAttribute("data-jump"));
-      if (!el) return;
-      e.preventDefault();
-      el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  var jTabs = Array.prototype.slice.call(document.querySelectorAll(".j-stages a[data-jump]"));
+  var jPanels = jTabs.map(function (t) { return document.getElementById(t.getAttribute("data-jump")); });
+  if (jTabs.length && jPanels.indexOf(null) === -1) {
+    var jList = document.querySelector(".j-stages");
+    var jVidPanel = -1;
+    jList.setAttribute("role", "tablist");
+    jTabs.forEach(function (t, i) {
+      var pid = t.getAttribute("data-jump");
+      t.setAttribute("role", "tab");
+      t.id = "tab-" + pid;
+      t.setAttribute("aria-controls", pid);
+      jPanels[i].setAttribute("role", "tabpanel");
+      jPanels[i].setAttribute("aria-labelledby", t.id);
+      if (jPlayer && jPanels[i].contains(jPlayer)) jVidPanel = i;
     });
-  });
-  if (tocLinks.length && chapters.length && "IntersectionObserver" in window) {
-    var markToc = function (id) {
-      tocLinks.forEach(function (a) {
-        a.classList.toggle("on", a.getAttribute("data-jump") === id);
+
+    var selectTab = function (i, moveFocus) {
+      jTabs.forEach(function (t, k) {
+        var on = k === i;
+        t.classList.toggle("on", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.setAttribute("tabindex", on ? "0" : "-1");
+        jPanels[k].hidden = !on;
       });
+      if (jPlayer && i !== jVidPanel && !jPlayer.paused) jPlayer.pause();
+      if (moveFocus) jTabs[i].focus();
+      // if the bar has scrolled off, bring it back rather than leaving the
+      // reader stranded below a panel that just got shorter
+      if (jList.getBoundingClientRect().top < 60) {
+        jList.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      }
     };
-    var chapObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) markToc(en.target.id);
+
+    jTabs.forEach(function (t, i) {
+      t.addEventListener("click", function (e) {
+        e.preventDefault();
+        selectTab(i, false);
       });
-    }, { rootMargin: "-30% 0px -55% 0px", threshold: 0 });
-    chapters.forEach(function (ch) { chapObs.observe(ch); });
+      t.addEventListener("keydown", function (e) {
+        var n = null;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") n = (i + 1) % jTabs.length;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") n = (i - 1 + jTabs.length) % jTabs.length;
+        else if (e.key === "Home") n = 0;
+        else if (e.key === "End") n = jTabs.length - 1;
+        if (n === null) return;
+        e.preventDefault();
+        selectTab(n, true);
+      });
+    });
+
+    var jStart = 0, jHash = location.hash.replace("#", "");
+    jTabs.forEach(function (t, i) {
+      if (t.getAttribute("data-jump") === jHash) jStart = i;
+    });
+    selectTab(jStart, false);
+    if (jHash && jStart > 0) {
+      document.getElementById("journey").scrollIntoView({ behavior: "auto", block: "start" });
+    }
   }
 
   function paintPrompt(el, text) {
