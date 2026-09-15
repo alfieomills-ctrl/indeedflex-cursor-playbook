@@ -1,0 +1,8 @@
+{
+  "name": "indeedflex-cursor-playbook",
+  "private": true,
+  "description": "Static playbook page. No build step; the dependency is only for the Routing Middleware password gate.",
+  "dependencies": {
+    "@vercel/functions": "^3.9.7"
+  }
+}
