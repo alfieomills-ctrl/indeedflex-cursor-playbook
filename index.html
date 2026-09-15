@@ -348,7 +348,6 @@ h2 {
   background: none; border: 0; padding: 0 8px 4px;
   text-align: center; font: inherit; color: inherit;
 }
-.j-stage.is-live { cursor: pointer; }
 .j-node {
   width: 36px; height: 36px; border-radius: 50%;
   display: grid; place-items: center;
@@ -360,13 +359,6 @@ h2 {
 .j-stage.is-live .j-node {
   background: var(--pink); border-color: var(--pink); color: #fff;
   box-shadow: 0 0 0 4px var(--white), 0 0 0 10px rgba(221,0,169,.14);
-}
-.j-stage.is-live:hover .j-node,
-.j-stage.is-live[aria-expanded="true"] .j-node {
-  box-shadow: 0 0 0 4px var(--white), 0 0 0 12px rgba(221,0,169,.2);
-}
-.j-stage.is-live:focus-visible {
-  outline: 2px solid var(--pink); outline-offset: 6px; border-radius: 12px;
 }
 .j-stage.is-off { pointer-events: none; }
 .j-stage strong {
@@ -865,11 +857,11 @@ h2 {
   <p class="j-eye">By stage of the sales journey</p>
   <h2 class="j-title">Use it in every stage of the client prospect and <em>client journey</em></h2>
   <div class="j-stages">
-    <button type="button" class="j-stage is-live" id="j-prospect" aria-expanded="false" aria-controls="j-video">
+    <div class="j-stage is-live">
       <span class="j-node">01</span>
       <strong>Prospecting</strong>
-      <span class="j-live" id="j-live-lab">Live, watch</span>
-    </button>
+      <span class="j-live">Live</span>
+    </div>
     <div class="j-stage is-off" aria-disabled="true">
       <span class="j-node">02</span>
       <strong>Closing</strong>
@@ -884,7 +876,7 @@ h2 {
     </div>
   </div>
   <p class="j-cap">Two cohorts run this now. Win covers prospecting through close. Grow covers kickoff through expansion. Prospecting is live first, the rest rolls out stage by stage.</p>
-  <div id="j-video" hidden>
+  <div id="j-video">
     <p class="j-eye">Prospecting</p>
     <h3 class="j-vid-title">Local contacts, <em>straight to CRM</em></h3>
     <div class="player" id="j-theater">
@@ -948,25 +940,7 @@ Storyboard first, then GIF and MP4."><p class="p-lead">Branded motion, three bea
     });
   });
 
-  var prospect = document.getElementById("j-prospect");
-  var jPanel = document.getElementById("j-video") || document.getElementById("j-training");
-  var liveLab = document.getElementById("j-live-lab");
-  var jIsVideo = !!document.getElementById("j-video");
   var jPlayer = document.getElementById("j-player");
-  if (prospect && jPanel) {
-    prospect.addEventListener("click", function () {
-      var open = prospect.getAttribute("aria-expanded") === "true";
-      prospect.setAttribute("aria-expanded", open ? "false" : "true");
-      jPanel.hidden = open;
-      if (liveLab) {
-        liveLab.textContent = jIsVideo
-          ? (open ? "Live, watch" : "Hide video")
-          : (open ? "Live, open training" : "Hide training");
-      }
-      if (!open) jPanel.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-      if (open && jPlayer && !jPlayer.paused) jPlayer.pause();
-    });
-  }
   var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".j-toc a[data-jump]"));
   var chapters = Array.prototype.slice.call(document.querySelectorAll(".j-mod"));
   tocLinks.forEach(function (a) {
