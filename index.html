@@ -867,6 +867,32 @@ h2 {
   .top nav.open { display: flex; }
   .top nav a { font-size: 16px; padding: 12px 10px; border-radius: 10px; }
 }
+.dl {
+  display: flex; align-items: center; gap: 16px;
+  margin: 22px 0 0; padding: 18px 20px;
+  background: var(--wash); border: 1px solid var(--line);
+  border-radius: 16px; text-decoration: none; color: inherit;
+}
+.dl:hover { background: var(--white); border-color: rgba(221,0,169,.45); }
+.dl:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+.dl-ico {
+  width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
+  background: var(--ink); color: #fff; display: grid; place-items: center;
+}
+.dl-ico svg { width: 18px; height: 18px; display: block; }
+.dl-txt { flex: 1; min-width: 0; }
+.dl-txt strong {
+  display: block; font-size: 16px; font-weight: 700; letter-spacing: -.02em;
+}
+.dl-txt em {
+  display: block; font-style: normal; font-size: 14px;
+  color: var(--muted); margin-top: 3px;
+}
+.dl-go { flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--pink); }
+@media (max-width: 560px) {
+  .dl { flex-wrap: wrap; gap: 12px; }
+  .dl-go { width: 100%; }
+}
 </style>
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -909,6 +935,15 @@ h2 {
       </div>
     </div>
   </div>
+  <a class="dl" href="https://drive.google.com/drive/folders/1TPZeng9Dicpo85JFYS3UQFO6gjpdA3gn" target="_blank" rel="noopener">
+    <span class="dl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v10"/><path d="M8 10.5l4 4 4-4"/><path d="M5 17.6v1.1A1.3 1.3 0 0 0 6.3 20h11.4a1.3 1.3 0 0 0 1.3-1.3v-1.1"/></svg></span>
+    <span class="dl-txt">
+      <strong>Download and install the second brain plugin</strong>
+      <em>Install it first, then the three steps below.</em>
+    </span>
+    <span class="dl-go">Open in Drive</span>
+    <span class="vh">(opens in a new tab)</span>
+  </a>
 </section>
 
 <section id="setup" class="reveal">
